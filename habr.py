@@ -11,8 +11,12 @@ import sys
 
 def download_images(text, out_dir):
     i = 0
-    for m in re.finditer(re.compile("<img[^>]*src=[\'\"]([^\'\"]+?habrastorage[^\'\"]+)", re.IGNORECASE), text):
+    links = list(re.finditer(re.compile(
+        "(?:<img[^>]*src=[\'\"]([^\'\"]+?habrastorage[^\'\"]+))", re.IGNORECASE), text)) + list(re.finditer(re.compile(
+        "(?:!\[image\]\(([^\)]+?habrastorage[^\)]+)\))", re.IGNORECASE), text))
+    for m in links:
         link = m.group(1)
+        m.groups()
         print link
         link = link.replace("habrastorage.org", "hsto.org")
         if link[:2] == "//":
@@ -140,6 +144,6 @@ def process_dir(dir_name):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print "Usage: %s <directory>" % sys.argv[0]
-        sys.exit(1)
+        sys.exit(2)
     else:
         process_dir(sys.argv[1])
