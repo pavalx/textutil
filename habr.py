@@ -13,7 +13,7 @@ def download_images(text, out_dir):
     i = 0
     links = list(re.finditer(re.compile(
         "(?:<img[^>]*src=[\'\"]([^\'\"]+?habrastorage[^\'\"]+))", re.IGNORECASE), text)) + list(re.finditer(re.compile(
-        "(?:!\[image\]\(([^\)]+?habrastorage[^\)]+)\))", re.IGNORECASE), text))
+        "(?:!\[[^\]]+?\]\(([^\)]+?habrastorage[^\)]+)\))", re.IGNORECASE), text))
     for m in links:
         link = m.group(1)
         m.groups()
@@ -91,6 +91,7 @@ def make_md_replaces(text):
     text = md.convert(text.decode('utf-8')).encode('utf-8')
     text = cut_tag(text)
     text = ignore_tags(text)
+    text = re.sub(r'<spoiler title=[\'\"]([^\"\']+)[\'\"]>', '<p>\g<1></p>', text)
     text = img_replace(text)
     return text
 
