@@ -13,7 +13,7 @@ def download_images(text, out_dir):
     i = 0
     links = list(re.finditer(re.compile(
         "(?:<img[^>]*src=[\'\"]([^\'\"]+?habrastorage[^\'\"]+))", re.IGNORECASE), text)) + list(re.finditer(re.compile(
-        "(?:!\[[^\]]+?\]\(([^\)]+?habrastorage[^\)]+)\))", re.IGNORECASE), text))
+        "(?:!\[[^\]]*?\]\(([^\)]+?habrastorage[^\)]+)\))", re.IGNORECASE), text))
     for m in links:
         link = m.group(1)
         m.groups()
